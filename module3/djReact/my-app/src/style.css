@@ -1,0 +1,25 @@
+.div{
+  width: 300px;
+  height: auto;
+}
+
+
+.black{
+  background-color: black;
+  width: 300px;
+  height: 300px;
+  border:blue 5px;
+  color:white
+}
+
+.white{
+  background-color: antiquewhite;
+  width: 300px;
+  height: 300px;
+  border:red 5px;
+}
+.red{
+  background-color: red;
+  width: 300px;
+  height: 300px;
+}

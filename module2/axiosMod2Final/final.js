@@ -43,8 +43,8 @@ function getData() {
 
 
 
-function newItem(item) {
-  data = item
+  function newItem(item) {
+  const data = item
   const htitle = document.createElement("h1")
   const div = document.createElement("div")
   document.getElementById("todolist").appendChild(div)
@@ -74,21 +74,22 @@ function newItem(item) {
   div.appendChild(deleteButton)
 
   deleted(deleteButton, data)
-  // button.addEventListener("click", function event() {
-  //   data.completed = !data.completed
+  
+  button.addEventListener("click", function event() {
+    data.completed = !data.completed
 
-  //   axios.put("https://api.vschool.io/chrisrees/todo/" + data._id, {
-  //       completed: data.completed
-  //     })
-  //     .then(response => {
-  //       if (response.completed) {
-  //         hdescription.style.textDecoration = "line-through"
+    axios.put("https://api.vschool.io/chrisrees/todo/" + data._id, {
+        completed: data.completed
+      })
+      .then(response => {
+        if (response.completed) {
+          hdescription.style.textDecoration = "line-through"
          
-  //       } else
-  //         hdescription.style.textDecoration = "none"
-  //       console.log(response)
-  //     })
-  //     .catch(error => console.log(error))
-  // })
+        } else
+          hdescription.style.textDecoration = "none"
+        console.log(response)
+      })
+      .catch(error => console.log(error))
+  })
   }
  

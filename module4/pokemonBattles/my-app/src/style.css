@@ -1,0 +1,14 @@
+.poke1{
+position: absolute;
+margin-left:100vh;
+}
+.poke2{
+position: absolute;
+margin-left:50vh;
+}
+
+.button{
+  position: absolute;
+  margin-left: 86vh;
+  margin-top:20vh;
+}
