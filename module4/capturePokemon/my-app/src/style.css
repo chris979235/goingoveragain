@@ -43,7 +43,14 @@
   background-color:  blue;
   margin-top: 600px;
 }
-
+.button2{
+  position: absolute;
+  width:100px;
+  margin-left:350px;
+  border-radius: 10px;
+  background-color:  yellow;
+  margin-top: 650px;
+}
 .pokeball{
     position: absolute;
     width:100px;

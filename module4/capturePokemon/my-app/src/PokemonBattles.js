@@ -1,4 +1,5 @@
 import React, {useState, useEffect,useCallback} from 'react'
+import {Link, Router} from 'react-router-dom'
 import {useParams} from 'react-router-dom'
 import fire from './images/fire.jpeg'
 import water from './images/water.jpeg'
@@ -20,7 +21,7 @@ export default function PokemonBattles(props) {
   function getRandom(){
     setRandomImage(images[Math.floor(Math.random()*images.length)])
   }
-  
+
   function toggled(){
     setToggle(toggle!==toggle)
   }
@@ -28,6 +29,7 @@ export default function PokemonBattles(props) {
   useEffect(()=> {
     axios.get('https://api.pokemontcg.io/v1/cards/' + pokeId).then(res => {
       setYourBattlePokemonObject(res.data.card)
+      setYourPokemonArray([res.data.card])
     })
   },[])
   
@@ -40,19 +42,7 @@ export default function PokemonBattles(props) {
       setSecondPokemon(filtered[Math.floor(Math.random()*filtered.length)])
   })
   },[])
-
-  useEffect(()=>{
-    if(yourPokemonArray.length>0&&parseInt(yourBattlePokemonObject.hp)<=0){
-        setYourBattlePokemonObject(yourPokemonArray[0])
-    }
-
-  },[yourPokemonArray,yourBattlePokemonObject])
-
-
-  
-
-  
-
+  //has to be in fights function 
   function fights(){
     setSecondPokemon(prev => {
       const firstRandom=Math.floor(Math.random()*yourBattlePokemonObject.attacks.length)
@@ -65,47 +55,70 @@ export default function PokemonBattles(props) {
         hp
       }
     })
-    
     setYourBattlePokemonObject(prev=>{
       const secondRandom=Math.floor(Math.random()*secondPokemon.attacks.length)
       const hp = parseInt(prev.hp) - parseInt(secondPokemon.attacks[secondRandom].damage)
-      // if(hp<=0){
-      //   return yourPokemonArray[Math.floor(Math.random()*yourPokemonArray.length)]
-      // }
-
-      return {
-        ...prev,
-        hp
-      }
-    })
-  }
+      if(hp<=0){
+        const filterid=prev.id
+        setYourPokemonArray(prev=>{
+          console.log(123456,[...prev.filter(pokemons=>pokemons.id!==filterid)])
+         return [...prev.filter(pokemons=>pokemons.id!==filterid)]
+         ////filter should be filtering out in123456, but still showing in 9900
+        })
+        const filteredArray = yourPokemonArray.filter(pokemons=>pokemons.id!==filterid)
+        console.log(9900,yourPokemonArray)
+          if (filteredArray.length === 0) {
+            alert('you have killed all your pokemon click try again')
+            disableButtons()
+            return  {}
+          }
+          return filteredArray[Math.floor(Math.random()*filteredArray.length)]
+        }
+        return {
+          ...prev,
+          hp
+        }
+      })
+    }
  
     console.log(222222,yourPokemonArray)
   console.log(111111,secondPokemon)
     
-    
-  function capture(...second){
-    for(let i=0; i<yourPokemonArray.length; i++){
-    var ids=yourPokemonArray[i].id
+  function disableButtons(){
+    const disabledButton=document.getElementsByClassName('disableOnLoss')
+    for(let i=0; i<disabledButton.length; i++){
+      disabledButton[i].disabled=true
     }
-    if (parseInt(second[0].hp)<=240 && ids!==second[0].id){
-      setYourPokemonArray([second[0]])
+  }  
+
+  function capture(...second){
+    var ids =[]
+    for(let i=0; i<yourPokemonArray.length; i++){
+      ids.push(yourPokemonArray[i].id)
+    }
+
+    if (parseInt(second[0].hp)<=60 && !ids.includes(second[0].id)){
+      setYourPokemonArray(prev=>[...prev, second[0]])
+      setSecondPokemon(pokemon[Math.floor(Math.random()*pokemon.length)])
       alert(`you have caught ${second[0].name}`)
     }
-  
-   else alert(`you have already caught ${second[0].name}`)
-    // if(canCatch===false){
-    //   alert('you can only capture a pokemon if its hp is 40 or less')
-    // }
+    else if(parseInt(second[0].hp)>60){
+      alert(`${second[0].name} hp must be less than 60`)
+    }
+    
+    else alert(`you have already caught ${second[0].name}`)
   }
 
-  useEffect(()=>{
-    console.log(888,yourBattlePokemonObject)
-    if(parseInt(yourBattlePokemonObject.hp)<=0){
-      setYourPokemonArray(prev=>prev.filter(pokemon=>pokemon.id!==yourBattlePokemonObject.id))
-    }
-  },[yourBattlePokemonObject])
+  // useEffect(()=>{
+  //   console.log(888,yourBattlePokemonObject)
+  //   if(parseInt(yourBattlePokemonObject.hp)<=0){
+  //     setYourPokemonArray(prev=>prev.filter(pokemon=>pokemon.id!==yourBattlePokemonObject.id))
+  //   }
+  // },[yourBattlePokemonObject])
 
+  function refreshing(){
+    window.location.href = '/'
+  }
   
   return (
     <div>
@@ -119,9 +132,12 @@ export default function PokemonBattles(props) {
         
         <div>
           <img src={randomImage} className='randomImage'/>
-          <button onClick={getRandom} className='button'> walk</button>
-          <button onClick={fights} className='button1'>fight</button>
-          <button onClick={()=>capture(secondPokemon)} className='pokeball'>throw Pokeball</button>
+          <button onClick={getRandom} className='button disableOnLoss' > walk</button>
+          <button onClick={fights} className='button1 disableOnLoss' >fight</button>
+          <button onClick={()=>capture(secondPokemon)} className='pokeball disableOnLoss' >
+            throw Pokeball</button>
+          <button onClick={refreshing} className='button2' >try again</button>
+
 
           <div className='poke1'>
           <p className='name'>{yourBattlePokemonObject?.name}</p>
@@ -141,4 +157,3 @@ export default function PokemonBattles(props) {
     </div>
   )
 }
-// {toggleCapture?a:<button onClick={capture}>throw pokeball</button>}
