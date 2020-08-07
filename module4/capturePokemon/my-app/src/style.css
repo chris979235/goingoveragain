@@ -1,13 +1,17 @@
 .intro{
-  margin-left:20%;
+  margin-left: 40vh;
+  margin-top: 30vh;
   width:800px;
   text-align: center;
 }
-.choose{
-  margin-left: 55vh;
+.chooseButton{
   background-color: red;
   height: 60px;
   font-size: 20px;
+  border-radius: 10px;
+}
+.chooseButton:hover{
+  opacity: .8;
 }
 .looklikebutton {
   padding:10px 15px;
@@ -25,20 +29,21 @@
   width:800px;
   height:800px;
   position: absolute;
+  margin-left:38vh
 }
 
 .button{
   position: absolute;
   width:200px;
-  margin-left:300px;
+  margin-left:600px;
   border-radius: 10px;
   background-color:  red;
-  margin-top: 700px;
+  margin-top: 650px;
 }
 .button1{
   position: absolute;
   width:200px;
-  margin-left:300px;
+  margin-left:600px;
   border-radius: 10px;
   background-color:  blue;
   margin-top: 600px;
@@ -46,30 +51,60 @@
 .button2{
   position: absolute;
   width:100px;
-  margin-left:350px;
+  margin-left:650px;
   border-radius: 10px;
   background-color:  yellow;
-  margin-top: 650px;
+  margin-top: 700px;
 }
 .pokeball{
     position: absolute;
     width:100px;
-    margin-left:350px;
+    margin-left:650px;
     border-radius: 10px;
     background-color: green;
-    margin-top: 500px;
+    margin-top: 530px;
 }
 .poke1{
   position: absolute;
-  margin-left: 100px;
+  margin-left: 400px;
+  text-align: center;
 }
 .poke2{
   position: absolute;
-  margin-left: 500px;
+  margin-left: 760px;
+  text-align: center;
 }
 .hp{
   color: white
 }
 .name{
   color: white;
+}
+.center{
+  display: inline-block;
+  margin: 100px;
+}
+.texty{
+  margin-top: 40vh;
+  text-align: center;
+}
+.continueButton{
+  font-size: 20px;
+  width:300px;
+  height:50px;
+  border-radius: 10px;
+  background-color:  red;
+}
+.continueButton:hover{
+  opacity: .8;
+}
+.nextFighter{
+  width:200px;
+  margin-left:50px;
+  border-radius: 10px;
+  background-color: green;
+  text-align: center;
+}
+.pokelist{
+  margin-left: 25px;
 }

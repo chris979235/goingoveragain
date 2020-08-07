@@ -1,5 +1,4 @@
-import React, {useState, useEffect,useCallback} from 'react'
-import {Link, Router} from 'react-router-dom'
+import React, {useState, useEffect,} from 'react'
 import {useParams} from 'react-router-dom'
 import fire from './images/fire.jpeg'
 import water from './images/water.jpeg'
@@ -18,6 +17,7 @@ export default function PokemonBattles(props) {
   const [randomImage, setRandomImage]=useState([fire])
   const [secondPokemon, setSecondPokemon]=useState({})
   
+
   function getRandom(){
     setRandomImage(images[Math.floor(Math.random()*images.length)])
   }
@@ -68,7 +68,7 @@ export default function PokemonBattles(props) {
         const filteredArray = yourPokemonArray.filter(pokemons=>pokemons.id!==filterid)
         console.log(9900,yourPokemonArray)
           if (filteredArray.length === 0) {
-            alert('you have killed all your pokemon click try again')
+            alert('congradulations all your pokeomon have died, you must not be a very good trainer')
             disableButtons()
             return  {}
           }
@@ -80,9 +80,6 @@ export default function PokemonBattles(props) {
         }
       })
     }
- 
-    console.log(222222,yourPokemonArray)
-  console.log(111111,secondPokemon)
     
   function disableButtons(){
     const disabledButton=document.getElementsByClassName('disableOnLoss')
@@ -90,6 +87,7 @@ export default function PokemonBattles(props) {
       disabledButton[i].disabled=true
     }
   }  
+ 
 
   function capture(...second){
     var ids =[]
@@ -109,23 +107,25 @@ export default function PokemonBattles(props) {
     else alert(`you have already caught ${second[0].name}`)
   }
 
-  // useEffect(()=>{
-  //   console.log(888,yourBattlePokemonObject)
-  //   if(parseInt(yourBattlePokemonObject.hp)<=0){
-  //     setYourPokemonArray(prev=>prev.filter(pokemon=>pokemon.id!==yourBattlePokemonObject.id))
-  //   }
-  // },[yourBattlePokemonObject])
+ 
 
   function refreshing(){
     window.location.href = '/'
   }
   
+  const yourArray=yourPokemonArray.map(function(singles){
+  return <div className='pokelist'> <h1>{singles.name}</h1> <h2>HP:{singles.hp}</h2> </div>
+  })
+
+
   return (
     <div>
       { toggle?
-        <div>
-          <h3>congradulations trainer you have chosen {yourBattlePokemonObject.name}, go forth and bring chaos and destrucion upon your enemies and enslave... caputure as many monsters as you can</h3>
-          <button onClick={toggled}>continue on your adventure</button>
+        <div className='texty'>
+          <h1>Congradulations trainer you have chosen {yourBattlePokemonObject.name}</h1> 
+          <h2>Go forth and bring chaos and destrucion upon your enemies and enslave... </h2>
+            <h2>capture as many monsters (innocent creatures) as you can!</h2>
+          <button onClick={toggled} className='continueButton'>continue on your adventure</button>
         </div>
         
         :
@@ -134,23 +134,27 @@ export default function PokemonBattles(props) {
           <img src={randomImage} className='randomImage'/>
           <button onClick={getRandom} className='button disableOnLoss' > walk</button>
           <button onClick={fights} className='button1 disableOnLoss' >fight</button>
-          <button onClick={()=>capture(secondPokemon)} className='pokeball disableOnLoss' >
+          <button onClick={()=>capture(secondPokemon)} className='pokeball disableOnLoss'>
             throw Pokeball</button>
-          <button onClick={refreshing} className='button2' >try again</button>
+          <button onClick={refreshing} className='button2'>try again</button>
 
 
           <div className='poke1'>
           <p className='name'>{yourBattlePokemonObject?.name}</p>
           <img src={yourBattlePokemonObject?.imageUrl}/>
           <p className='hp'>HP:{yourBattlePokemonObject?.hp}</p>
-         </div>
+          </div>
     
-         <div className='poke2'>
+          <div className='poke2'>
           <p className='name'>{secondPokemon?.name}</p>
           <img src={secondPokemon?.imageUrl}/>
           <p className='hp'>HP:{secondPokemon?.hp}</p>
-         </div>
-        
+          </div>
+
+          <h1 className='nextFighter'>Next Fighter</h1>
+          <div className='pokelist'>
+          {yourArray}
+          </div>
         </div>
 
       }

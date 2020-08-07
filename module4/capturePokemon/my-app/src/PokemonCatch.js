@@ -28,7 +28,7 @@ axios.get('https://api.pokemontcg.io/v1/cards')
 },[])
 
   const starters=starter.map(function(choose){
-  return <div>  
+  return <div className='center'>  
     <p>
       Name: {choose?.name}</p>
   <img src={choose?.imageUrl}/>
@@ -45,10 +45,10 @@ axios.get('https://api.pokemontcg.io/v1/cards')
   return (
     <div>
      { toggle? 
-     <>
-     <h2 className='intro'>welcome trainer to a world filled with brutality where you capture innocent creatures and force them to fight to the death!!!</h2>
-    <button onClick={getFirstThree} className='choose'>choose your starter servant... i mean pokemon</button>
-    </>
+     <div className='intro'>
+     <h2>welcome trainer to a world filled with brutality where you capture innocent creatures and force them to fight to the death!!!</h2>
+    <button onClick={getFirstThree} className='chooseButton'>choose your starter servant... i mean pokemon</button>
+    </div>
     :
      <div>
   {starters}
